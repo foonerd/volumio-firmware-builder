@@ -107,7 +107,7 @@ All files follow standard `sum` format with filename included for integrity chec
 
 Manually upload `firmware-volumio.tar.gz` to:
 
-https://github.com/volumio/volumio3-os-static-assets/tree/master/firmwares/\<target\>/
+`https://github.com/volumio/volumio3-os-static-assets/tree/master/firmwares/<target>/`
 
 Ensure your build logic extracts it to `/lib/firmware` in the target rootfs.
 
