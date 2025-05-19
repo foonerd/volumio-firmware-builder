@@ -14,6 +14,7 @@ https://github.com/volumio/volumio3-os-static-assets/tree/master/firmwares/<targ
 - Supports exact firmware blob paths (e.g., `rtlwifi/rtl8192cufw_TMSC.bin`)
 - Output: `output/firmware-volumio.tar.gz`
 - Validates required firmware by analyzing kernel modules (`modinfo`)
+- Supports optional manual injection of vendor-only or deprecated firmware
 
 ## Getting Started
 
@@ -48,19 +49,51 @@ Output will be:
 output/firmware-volumio.tar.gz
 ```
 
-### Optional: Auto-Generate Firmware List
+
+## Optional: Auto-Generate Firmware List
 
 On a Raspberry Pi target running Volumio:
 
 ```bash
-./scripts/validate-paths.sh > firmware-list.txt
+sudo ./scripts/check-firmware.sh
 ```
+
+This will produce:
+
+- `required-firmware.txt`
+- `available-firmware.txt`
+- `missing-firmware.txt`
+
+Manually curate `missing-firmware.txt` to update `firmware-list.txt`.
+
+## Manual Firmware Injection
+
+Some firmware blobs are not present in the official `linux-firmware.git` tree and must be added manually. These include:
+
+- `rt3070.bin` (legacy Ralink)
+- `rtl8723cs_cg_config.bin`, `rtl8723cs_cg_fw.bin`
+- `rtl8723ds_config.bin`, `rtl8723ds_fw.bin`
+
+Use the provided script to inject them into the final archive:
+
+```bash
+./scripts/manual-inject.sh
+```
+
+This will:
+- Download vendor or legacy firmware
+- Extract or fetch files from reliable sources (Armbian, Debian snapshot)
+- Append them into `output/firmware-volumio.tar.gz`
+- Regenerate `firmware-volumio.tar.gz.gz`
+
 
 ## Upload to Volumio
 
 Manually upload `firmware-volumio.tar.gz` to:
 
 https://github.com/volumio/volumio3-os-static-assets/tree/master/firmwares/<target>/
+
+Ensure your build logic extracts it to `/lib/firmware` in the target rootfs.
 
 ## License
 
