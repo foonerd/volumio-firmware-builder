@@ -4,7 +4,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 # Directory to stage manually injected firmware blobs
-STAGE_DIR="./firmware-manual/lib/firmware"
+STAGE_DIR="./firmware-manual/usr/lib/firmware"
 
 # Create target directory structure
 mkdir -p "${STAGE_DIR}/rtl_bt"
@@ -50,10 +50,10 @@ echo "[*] Unpacking existing firmware bundle"
 tar -xf "$OUT_TAR" -C "$MERGE_DIR"
 
 echo "[*] Copying staged manual firmware into unpacked bundle"
-cp -a firmware-manual/lib/firmware/* "$MERGE_DIR/lib/firmware/"
+cp -a firmware-manual/usr/lib/firmware/* "$MERGE_DIR/usr/lib/firmware/"
 
 echo "[*] Repacking combined firmware bundle"
-tar -C "$MERGE_DIR" -cf output/firmware-volumio.tar lib/firmware
+tar -C "$MERGE_DIR" -cf output/firmware-volumio.tar usr
 gzip -f output/firmware-volumio.tar
 
 echo "[+] Done. Output: $OUT_TAR"
