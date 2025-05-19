@@ -84,7 +84,7 @@ This will:
 - Download vendor or legacy firmware
 - Extract or fetch files from reliable sources (Armbian, Debian snapshot)
 - Append them into `output/firmware-volumio.tar.gz`
-- Regenerate `firmware-volumio.tar.gz.gz`
+- Regenerate `firmware-volumio.tar.gz`
 
 
 ## Upload to Volumio
