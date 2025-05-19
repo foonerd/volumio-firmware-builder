@@ -15,6 +15,7 @@ https://github.com/volumio/volumio3-os-static-assets/tree/master/firmwares/<targ
 - Output: `output/firmware-volumio.tar.gz`
 - Validates required firmware by analyzing kernel modules (`modinfo`)
 - Supports optional manual injection of vendor-only or deprecated firmware
+- Supports generation of SHA1, SHA256, and MD5 checksums
 
 ## Getting Started
 
@@ -49,7 +50,6 @@ Output will be:
 output/firmware-volumio.tar.gz
 ```
 
-
 ## Optional: Auto-Generate Firmware List
 
 On a Raspberry Pi target running Volumio:
@@ -81,17 +81,33 @@ Use the provided script to inject them into the final archive:
 ```
 
 This will:
+
 - Download vendor or legacy firmware
 - Extract or fetch files from reliable sources (Armbian, Debian snapshot)
 - Append them into `output/firmware-volumio.tar.gz`
 - Regenerate `firmware-volumio.tar.gz`
 
+## Generate Hashes
+
+After creating the bundle, you can generate checksum files:
+
+```bash
+./scripts/generate-hashes.sh
+```
+
+This creates:
+
+- `output/firmware-volumio.sha1sum.txt`
+- `output/firmware-volumio.sha256sum.txt`
+- `output/firmware-volumio.md5sum.txt`
+
+All files follow standard `sum` format with filename included for integrity checks.
 
 ## Upload to Volumio
 
 Manually upload `firmware-volumio.tar.gz` to:
 
-https://github.com/volumio/volumio3-os-static-assets/tree/master/firmwares/<target>/
+https://github.com/volumio/volumio3-os-static-assets/tree/master/firmwares/\<target\>/
 
 Ensure your build logic extracts it to `/lib/firmware` in the target rootfs.
 
